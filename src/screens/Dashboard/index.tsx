@@ -25,7 +25,6 @@ export function Dashboard() {
   const { navigate } = useNavigation();
 
   const { addRepository, repositories } = useRepositories();
-
   function handleAddRepository() {
     /**
      * TODO: 
@@ -33,6 +32,8 @@ export function Dashboard() {
      * - clean inputText value.
      */
     inputRef.current?.blur();
+    addRepository(inputText);
+    setInputText('');
   }
 
   function handleRepositoryPageNavigation(id: number) {
@@ -44,8 +45,8 @@ export function Dashboard() {
      *  repositoryId: id of the repository
      * })
      */
+    navigate('Repository', {repositoryId: id});
   }
-
   return (
     <Background>
       <Container>
@@ -62,6 +63,7 @@ export function Dashboard() {
                * changes:
                * onChangeText={YOUR CODE HERE}
                */
+              onChangeText={setInputText}
               onSubmitEditing={handleAddRepository}
               returnKeyType="send"
               autoCapitalize='none'
@@ -76,6 +78,7 @@ export function Dashboard() {
              * empty (use disabled prop to this):
              * disabled={CONDITION HERE}
              */
+              disabled={inputText.length === 0 && true}
             >
               <Icon name="search" size={20} />
             </InputButton>
